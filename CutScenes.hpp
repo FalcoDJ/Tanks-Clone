@@ -2,6 +2,7 @@
 #define CUT_SCENES_HPP
 
 #include "olcPixelGameEngine.hpp"
+#include "FileChecker.hpp"
 
 enum class CutSceneState { PLAYING=1, FINISHED=0 };
 
@@ -27,15 +28,7 @@ public:
 
         m_WindowSize = vecScreenSize;
 
-        bool success = true;
-
-        for (const auto &file : files_to_load) {
-            if (!_gfs::exists(file))
-            {
-                std::cout << std::endl << '"' + file + '"' + " Doesn't exist" << std::endl;
-                success = false;
-            };
-        }
+        bool success = file::batchDoesExist(files_to_load);
 
         if (success)
         LoadFiles();
